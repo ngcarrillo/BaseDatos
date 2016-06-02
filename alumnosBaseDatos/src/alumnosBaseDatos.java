@@ -58,7 +58,7 @@ apellidosA = apellido.getText();
 idA=id.getText();
         try {
             
-            PreparedStatement stmt = link.prepareStatement("INSERT INTO alumnos(nombre,curso) VALUES ('"+nombreA+"','"+cursoA+"','"+apellidosA+"','"+idA+"')");
+            PreparedStatement stmt = link.prepareStatement("INSERT INTO alumnos(nombre,curso,apellidos, id) VALUES ('"+nombreA+"','"+cursoA+"','"+apellidosA+"','"+idA+"')");
             stmt.executeUpdate();
             
         } catch (SQLException ex) {
@@ -77,8 +77,19 @@ public void Borrar() {
         }
 }     
 
+public void modificar(){
+idA=id.getText();
+String idModificar= JOptionPane.showInputDialog(null, "¿Cual es el alumno a modificar?, Introduce su ID");
+String nuevoNombre= JOptionPane.showInputDialog (null, "Introduce nombre");
+String nuevoApellidos= JOptionPane.showInputDialog (null, "Introduce apellido");
+String nuevoCurso = JOptionPane.showInputDialog (null, "Introduce curso");
 
-   
+        try {
+            PreparedStatement stmt = link.prepareStatement("UPDATE alumnos SET (nombre,curso,apellidos, id)= ('"+nuevoNombre+"','"+nuevoCurso+"','"+nuevoApellidos+"') WHERE id '"+idA+"'" );
+        } catch (SQLException ex) {
+            Logger.getLogger(alumnosBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
 
 
 
@@ -202,7 +213,6 @@ public void Borrar() {
     apellido.setText("");
     id.setText("");
    
-       
     }//GEN-LAST:event_añadirActionPerformed
 
     private void borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarActionPerformed
@@ -210,6 +220,8 @@ public void Borrar() {
         Borrar();
         curso.setText("");
         nombre.setText("");
+        apellido.setText("");
+        id.setText("");
         
     }//GEN-LAST:event_borrarActionPerformed
 
