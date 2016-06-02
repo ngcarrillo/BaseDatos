@@ -70,7 +70,7 @@ public void Borrar() {
     idA=id.getText();
    
         try {
-            PreparedStatement stmt = link.prepareStatement("DELETE FROM alumnos WHERE nombre = '"+idA+"'");
+            PreparedStatement stmt = link.prepareStatement("DELETE FROM alumnos WHERE id = '"+idA+"'");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(alumnosBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,15 +78,19 @@ public void Borrar() {
 }     
 
 public void modificar(){
-idA=id.getText();
+
 String idModificar= JOptionPane.showInputDialog(null, "¿Cual es el alumno a modificar?, Introduce su ID");
 String nuevoNombre= JOptionPane.showInputDialog (null, "Introduce nombre");
 String nuevoApellidos= JOptionPane.showInputDialog (null, "Introduce apellido");
 String nuevoCurso = JOptionPane.showInputDialog (null, "Introduce curso");
 
         try {
-            PreparedStatement stmt = link.prepareStatement("UPDATE alumnos SET (nombre,curso,apellidos, id)= ('"+nuevoNombre+"','"+nuevoCurso+"','"+nuevoApellidos+"') WHERE id '"+idA+"'" );
+            //PreparedStatement stmt = link.prepareStatement("UPDATE alumnos SET nombre ='"+nuevoNombre+"' WHERE id = '"+idModificar+"'" );
+             PreparedStatement stmt = link.prepareStatement("UPDATE alumnos SET nombre ='"+nuevoNombre+"',curso= '"+nuevoCurso+"', apellidos = '"+nuevoApellidos+"' WHERE id = '"+idModificar+"'" );
+             stmt.executeUpdate();
+             JOptionPane.showMessageDialog(null, "hecho");
         } catch (SQLException ex) {
+            
             Logger.getLogger(alumnosBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
 }
@@ -112,6 +116,7 @@ String nuevoCurso = JOptionPane.showInputDialog (null, "Introduce curso");
         apellido = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         id = new javax.swing.JTextField();
+        modificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -149,6 +154,13 @@ String nuevoCurso = JOptionPane.showInputDialog (null, "Introduce curso");
             }
         });
 
+        modificar.setText("modificar");
+        modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,17 +176,19 @@ String nuevoCurso = JOptionPane.showInputDialog (null, "Introduce curso");
                         .addGap(49, 49, 49)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(51, 51, 51)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(nombre)
-                                    .addComponent(curso, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                    .addComponent(apellido)
-                                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(modificar)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel4))
+                                    .addGap(51, 51, 51)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(nombre)
+                                        .addComponent(curso, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                                        .addComponent(apellido)
+                                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(187, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -199,7 +213,8 @@ String nuevoCurso = JOptionPane.showInputDialog (null, "Introduce curso");
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(añadir)
-                    .addComponent(borrar))
+                    .addComponent(borrar)
+                    .addComponent(modificar))
                 .addGap(46, 46, 46))
         );
 
@@ -233,9 +248,17 @@ String nuevoCurso = JOptionPane.showInputDialog (null, "Introduce curso");
         // TODO add your handling code here:
     }//GEN-LAST:event_idActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
+        // TODO add your handling code here:
+        modificar();
+        curso.setText("");
+        nombre.setText("");
+        apellido.setText("");
+        id.setText("");
+        
+    }//GEN-LAST:event_modificarActionPerformed
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -278,6 +301,7 @@ String nuevoCurso = JOptionPane.showInputDialog (null, "Introduce curso");
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton modificar;
     private javax.swing.JTextField nombre;
     // End of variables declaration//GEN-END:variables
 }
